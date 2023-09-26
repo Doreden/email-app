@@ -9,7 +9,17 @@
 @import "./pages/about.css";
 
 /* Components */
-@import "./cmps/app-header.css";
+/* App Related */
+@import "./cmps/app/app-header.css";
+
+/* Email Related */
+@import "./cmps/email/email-list.css";
+@import "./cmps/email/email-filter.css";
+@import "./cmps/email/email-details.css";
+@import "./cmps/email/side-filter.css";
+@import "./cmps/email/email-compose.css";
+
+
 
 
 

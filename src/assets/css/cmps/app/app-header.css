@@ -1,7 +1,7 @@
 .app-header {
-    background: #e91e63;
-    color: white;
-
+    
+    background: rgb(249, 243, 243);
+    color: black;
 }
 
 .app-header section.container {

@@ -7,14 +7,21 @@ import { AboutTeam } from './components/about/AboutTeam';
 import { AboutVision } from './components/about/AboutVision';
 import { EmailIndex } from './pages/EmailIndex';
 import { EmailDetails } from './components/email/EmailDetails';
+import { EmailCompose } from './components/email/EmailCompose';
 export function App() {
 
     return (
         <Router>
-            <section className='main-app'>
-                <AppHeader />
-
-                <main className='container'>
+            <section className='main-app--container'>
+                <header className="item1">
+                    <AppHeader/>
+                    {/* <nav>
+                        <Link to="/">Home</Link>
+                        <Link to="/about">about</Link>
+                        <Link to="/email">Email</Link>
+                    </nav> */}
+                </header>
+                <main className="item2">
                     <Routes>
                         {/* Home Page */}
                         <Route path="/" element={<Home />} />
@@ -26,7 +33,8 @@ export function App() {
 
                         {/* Main Email Page */}
                         <Route path="/emails" element={<EmailIndex />} />
-                        <Route path="/email/:emailId" element={<EmailDetails />} />
+                        <Route path="/email/details/:emailId" element={<EmailDetails />} />
+                        <Route path="/email/compose" element={<EmailCompose />} />
                     </Routes>
                 </main>
                 {/* FooterPage */}
