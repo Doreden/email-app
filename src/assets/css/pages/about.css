@@ -1,4 +1,6 @@
 
 .about {
     background-color: rgb(169, 169, 234);
+    display: grid;
+    grid-template-rows: 2fr,fr;
 }

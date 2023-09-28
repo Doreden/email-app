@@ -1,9 +1,15 @@
-.side-panel-main--container {
-  display: flex;
-  flex-direction: column;
-  /* padding: 20px; */
-  gap: 5px;
-  margin-top: 15px;
+
+.aside-menu-container {
+  grid-area: aside;
+  /* align-self: self-start; */
+  display: grid;
+  align-content: start;
+  grid-template-columns: 200px  ;
+  grid-column: 1 /2;
+  grid-row: 2 /4;
+  background-color:  #e2e5f3;
+  
+
 }
 
 .compose-btn {
@@ -23,11 +29,6 @@
   margin-bottom: 20px;
 }
 
-.compose-img {
-  width: 20px;
-  height: 20px;
-}
-
 .side-panel-btn {
   width: 202px;
   height: 32px;
@@ -36,9 +37,15 @@
   align-items: center;
   gap: 10px;
   border: none;
-  background-color: #f7f8fc;
   cursor: auto;
 }
+
+
+.compose-img {
+  width: 20px;
+  height: 20px;
+}
+
 
 .side-panel-btn:hover {
 }

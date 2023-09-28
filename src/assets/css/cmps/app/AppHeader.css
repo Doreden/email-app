@@ -1,12 +1,13 @@
 .app-header {
-    
+    cursor: pointer;
+    grid-area: header;
     background: rgb(249, 243, 243);
     color: black;
 }
 
 .app-header section.container {
-    display: flex;
     align-items: center;
+
 
 }
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import searchBtn from "../../../src/assets/svg/search.png"
 
 export function EmailFilter({ onSetFilter }) {
     const [filter, setFilter] = useState("Search");
@@ -10,12 +11,14 @@ export function EmailFilter({ onSetFilter }) {
 
 
     return (
-        <div className="search-outer-box">
+        <div className="filter-container">
             <div className="search-box">
-                <span className="img-span-container">
-                    <img src="../../src/assets/svg/search.png" className="search-image" />
-                </span>
-                <input className="search-box"
+                
+                <button>
+                    <img src={searchBtn} className="search-image" />
+                </button>
+                
+                <input
                     type="text"
                     name="type"
                     id="type"

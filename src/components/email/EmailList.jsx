@@ -1,4 +1,4 @@
-import "../../../src/assets/css/cmps/email/email-list.css"
+import "../../../src/assets/css/cmps/email/EmailList.css"
 import { EmailPreview } from "../email/EmailPreview";
 import refresh from "../../../src/assets/svg/refresh.svg"
 import checkbox from "../../../src/assets/svg/checkbox.svg"
@@ -12,7 +12,7 @@ export function EmailList({ emails, onRemove, onMailRead, onStarred, onEnterEmai
 
     return (
         <div className="email-preview-main-container">
-            <div class className="head-buttons">
+            <div className="head-buttons">
                 <img src={checkbox} />
                 <img src={refresh} />
                 <img src= {dots}  />

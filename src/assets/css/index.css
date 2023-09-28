@@ -10,17 +10,13 @@
 
 /* Components */
 /* App Related */
-@import "./cmps/app/app-header.css";
+@import "./cmps/app/AppFooter.css";
+@import "./cmps/app/AppHeader.css";
 
 /* Email Related */
-@import "./cmps/email/email-list.css";
-@import "./cmps/email/email-filter.css";
-@import "./cmps/email/email-details.css";
-@import "./cmps/email/side-filter.css";
-@import "./cmps/email/email-compose.css";
-
-
-
-
-
-
+@import "./cmps/email/EmailCompose.css";
+@import "./cmps/email/EmailDetails.css";
+@import "./cmps/email/EmailFilter.css";
+@import "./cmps/email/EmailIndex.css";
+@import "./cmps/email/EmailList.css";
+@import "./cmps/email/SideMenu.css";

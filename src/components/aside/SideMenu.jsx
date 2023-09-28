@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import pencilBtn from "../../../src/assets/svg/pencil.svg"
 
 
 const buttons = [
@@ -26,10 +27,10 @@ export function SideMenu({ emails }) {
     }, [])
 
     return (
-        <div>
+        <div className="aside-menu-container">
             <Link to={"/email/compose"} className="compose-btn">
                 <span className="compose-img--span">
-                    <img className="compose-img" src="//src/assets/svg/pencil.svg" />
+                    <img className="compose-img" src={pencilBtn} />
                 </span>
                 Compose
             </Link>

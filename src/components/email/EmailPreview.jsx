@@ -27,8 +27,10 @@ export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEm
     return (
         <>
             <div className={`main-email-container ${email.isRead ? "" : "unread"}`}>
-                <input type="checkbox" name="1" className="mail-checkbox"></input>
-                <div className={`star block--item--20 ${email.isRead ? "" : "bold"}`}>
+                
+                <input type="checkbox" name="1" className="mail-preview-checkbox"></input>
+                
+                <div className={"mail-preview-star"}>
                     <span onClick={() => onToggleStar()}>
                         {email.isStarred ? (
                             <img src={fillStar} />
@@ -39,38 +41,34 @@ export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEm
                 </div>
 
                 {/* From Section : */}
-                <div className={`email-from-container block--item--40`}>
-                    <p className={email.isRead ? "" : "bold"}> {email.from}</p>
+                <div className={"mail-preview-from"}>
+                    {email.from}
                 </div>
 
+                {/* Link Section : */}
                 <Link
-                    style={{ textDecoration: "none" }}
+                    className={"mail-preview-link"}
                     to={`/email/details/${email.id}`}
-                    className={`block--item--300 email-preview--link-container`}
                     onClick={() => OnEnterEmail(email.id)}
                 >
-                    {
-                        <div className="from-subject-container">
-                            <div>
-                                <p className={`email-subject-container ${email.isRead ? "" : "bold"}`}>
-                                    {email.subject}
-                                </p>
-                            </div>
-                            <div>
-                                <p className="email-body-container">
-                                    {email.body}
-                                </p>
-                            </div>
-                        </div>
-                    }
                 </Link>
 
-                <div className="block--item--40 email-action-btns--td">
+                {/* Subject Section : */}
+                <div className="mail-preview-subject">
+                        {email.subject}
+                </div>
+                
+                {/* Body Section : */}
+                <div className="mail-preview-body">
+                        {email.body}
+                </div>
+
+                <div className="mail-preview-actions-btns">
                     <span onClick={() => onRemove(email.id)}>
                         <img src={bin} />{" "}
                     </span>
                     <span onClick={() => onToggleIsRead(email.id)}>
-                    {email.isRead ? " 📭" : " 📬"}
+                        {email.isRead ? " 📭" : " 📬"}
                     </span>
                 </div>
             </div>

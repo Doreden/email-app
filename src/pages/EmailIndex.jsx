@@ -101,24 +101,13 @@ export function EmailIndex() {
     console.log(emails)
 
     if (!emails) return <div>Loading..</div>
-    return (<div className="email-index--container">
-        {/* <h1>Welcome! this is your inbox</h1> */}
-        <section className="section-logo">
-            <Logo />
-        </section>
-
-        <aside className="aside">
+    return (
+        <div className="email-index-container">
+        <Logo />
             <SideMenu emails={emails} />
-        </aside>
 
-        {/* <p><img src="/src/assets/imgs/gmail-logo.png" alt="" /></p> */}
-
-        <section className="filter-container">
             <EmailFilter onSetFilter={onSetFilter} />
-        </section>
 
-        {/* <button onClick={onClearFilter}>Clear filter</button> */}
-        {/* <RobotFilter onSetFilter={onSetFilter} filterBy={filterBy} /> */}
 
         {!params.emailId && (
             <>
@@ -136,7 +125,6 @@ export function EmailIndex() {
         )}
         <Outlet />
 
-        {/* <EmailList emails={emails} onRemove={onRemoveEmail} /> */}
     </div>
     )
 }

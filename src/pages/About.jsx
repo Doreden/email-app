@@ -8,8 +8,9 @@ export function About() {
             <h1>We All About Stay In Touch!</h1>
             <Outlet />
             <nav>
-                <class name="team" Link to="/about/team">Team</class>
-                <Link to="/about/vision">Vision</Link>
+                <Link to="/about/team"> Meet Our Team</Link>
+                <Link to="/about/vision">Our Vision Is</Link>
+                <Link to="/about/contact">Contact Us</Link>
             </nav>
         </div>
     )
