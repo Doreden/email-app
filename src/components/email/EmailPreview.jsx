@@ -1,18 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import fillStar from "../../../src/assets/svg/star.png";
 import star from "../../../src/assets/svg/star-sculpt.png";
 import bin from "../../../src/assets/svg/bin.png"
 
 
-export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEmail, OnUpdateEmail }) {
+export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEmail, onUpdateEmail }) {
+
+    const params = useParams()
 
     //For Starred a Email:
     function onToggleStar() {
+        console.log(email)
         const newEmail = {
             ...email,
             isStarred: !email.isStarred
         }
-        OnUpdateEmail(newEmail)
+        console.log(newEmail)
+
+
+        onUpdateEmail(newEmail)
     }
 
     //For Toggle if was rad:
@@ -21,15 +27,15 @@ export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEm
             ...email,
             isRead: !email.isRead
         }
-        OnUpdateEmail(newEmail);
+        onUpdateEmail(newEmail);
     }
 
     return (
         <>
             <div className={`main-email-container ${email.isRead ? "" : "unread"}`}>
-                
+
                 <input type="checkbox" name="1" className="mail-preview-checkbox"></input>
-                
+
                 <div className={"mail-preview-star"}>
                     <span onClick={() => onToggleStar()}>
                         {email.isStarred ? (
@@ -41,30 +47,31 @@ export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEm
                 </div>
 
                 {/* From Section : */}
-                <div className={"mail-preview-from"}>
-                    {email.from}
-                </div>
-
                 {/* Link Section : */}
                 <Link
                     className={"mail-preview-link"}
-                    to={`/email/details/${email.id}`}
+                    to={`/emails/${params.folderId}/${email.id}`}
                     onClick={() => OnEnterEmail(email.id)}
                 >
+                    <div className={"mail-preview-from"}>
+                        {email.from}
+                    </div>
+
+
                 </Link>
 
                 {/* Subject Section : */}
                 <div className="mail-preview-subject">
-                        {email.subject}
+                    {email.subject}
                 </div>
-                
+
                 {/* Body Section : */}
                 <div className="mail-preview-body">
-                        {email.body}
+                    {email.body}
                 </div>
 
                 <div className="mail-preview-actions-btns">
-                    <span onClick={() => onRemove(email.id)}>
+                    <span onClick={() => onRemove(email)}>
                         <img src={bin} />{" "}
                     </span>
                     <span onClick={() => onToggleIsRead(email.id)}>

@@ -1,9 +1,9 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
-const loggedinUser = {
+const loggedInUser = {
     email: "dor.eden@gmail.com",
-    fullname: "Admin",
+    fullname: "Dor",
 };
 
 export const emailService = {
@@ -13,6 +13,7 @@ export const emailService = {
     remove,
     query,
     getDefaultFilter,
+    getEmailsCounts
 }
 
 const STORAGE_KEY = 'emails'
@@ -20,16 +21,37 @@ const STORAGE_KEY = 'emails'
 _createEmails()
 
 
-async function query(filterBy) {
+async function query(filterBy, folderId) {
     let emails = await storageService.query(STORAGE_KEY);
     if (filterBy) {
         let { to, body } = filterBy;
-        to = loggedinUser.email;
-         
+        to = loggedInUser.email;
+
         emails = emails.filter(
             (email) =>
                 email.body.toLowerCase().includes(body.toLowerCase()) && email.to === to
         );
+
+        //TODO change to switch case //
+        if (folderId === "inbox") {
+            emails = emails.filter(email => email.to == loggedInUser.email && email.removedAt === null && email.sentAt !== null)
+        }
+
+        if (folderId === "starred") {
+            emails = emails.filter(email => email.isStarred === true)
+        }
+
+        if (folderId === "sent") {
+            emails = emails.filter(email => email.from === loggedInUser.email && email.removedAt === null && email.sentAt != null)
+        }
+
+        if (folderId === "drafts") {
+            emails = emails.filter(email => email.sentAt === null && email.removedAt === null)
+        }
+
+        if (folderId === "trash") {
+            emails = emails.filter(email => email.removedAt !== null)
+        }
 
     }
     return emails
@@ -57,9 +79,19 @@ function save(emailToSave) {
 
 function getDefaultFilter() {
     return {
-        to: loggedinUser,
+        to: loggedInUser,
         body: "",
     };
+}
+
+ function getEmailsCounts() {
+    return {
+        inbox: 5,
+        starred: 20,
+        sent: 5,
+        drafts: 6,
+        trash: 8
+    }
 }
 
 function createEmail(subject = '', body = '', isRead = false, isStarred = false, sentAt = '', removedAt = null, from = '', to = '') {

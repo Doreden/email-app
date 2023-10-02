@@ -1,25 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import pencilBtn from "../../../src/assets/svg/pencil.svg"
 
 
 const buttons = [
-    { id: 1, name: "Inbox", img: "/src/assets/svg/inbox.png" },
-    { id: 2, name: "Starred", img: "/src/assets/svg/star-sculpt.png" },
-    { id: 3, name: "Sent", img: "/src/assets/svg/sent.png" },
-    { id: 4, name: "Drafts", img: "/src/assets/svg/draft.png" },
-    { id: 5, name: "Trash", img: "/src/assets/svg/bin.png" },
+    { id: "inbox", name: "Inbox", img: "/src/assets/svg/inbox.png" },
+    { id: "starred", name: "Starred", img: "/src/assets/svg/star-sculpt.png" },
+    { id: "sent", name: "Sent", img: "/src/assets/svg/sent.png" },
+    { id: "drafts", name: "Drafts", img: "/src/assets/svg/draft.png" },
+    { id: "trash", name: "Trash", img: "/src/assets/svg/bin.png" },
 ];
 
 export function SideMenu({ emails }) {
     const [active, setActive] = useState("inbox");
-
+    const navigate = useNavigate()
     const unreadEmailsCount = emails.filter(
         (email) => email.isRead !== true
     ).length;
 
     function setActiveButton(id) {
         setActive(id);
+        navigate(`/emails/${id}`)
+
+
     }
 
     useEffect(() => {
@@ -34,6 +37,7 @@ export function SideMenu({ emails }) {
                 </span>
                 Compose
             </Link>
+
             {buttons.map((button) => (
                 <button
                     key={button.id}

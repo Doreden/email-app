@@ -10,13 +10,19 @@ export function EmailIndex() {
 
     // define the emails
     const [emails, setEmails] = useState(null);
+    const [emailsCount, setEmailsCount] = useState(null);
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
     const params = useParams();
 
     // rendering the emails
+    console.log(params)
     useEffect(() => {
         loadEmails();
-    }, [filterBy]);
+    }, [filterBy, params])
+
+    // useEffect(() => {
+    //     loadEmails();
+    // }, [params])
 
     //Set Filter
     function onSetFilter(fieldsToUpdate) {
@@ -26,8 +32,10 @@ export function EmailIndex() {
     // function that loading the new emails in a async way //
     async function loadEmails() {
         try {
-            const emails = await emailService.query(filterBy);
+            const emails = await emailService.query(filterBy, params.folderId);
+            const emailsCount = await emailService.getEmailsCounts()
             setEmails(emails)
+            setEmailsCount(emailsCount)
         } catch (error) {
             console.error('Had issues loading the emails: ', error);
         }
@@ -36,7 +44,7 @@ export function EmailIndex() {
     async function onUpdateEmail(email) {
         try {
             const updatedEmail = await emailService.save(email);
-            setEmails(prevEmails => prevEmails.map(email.id === updatedEmail.id ? updatedEmail : email))
+            setEmails(prevEmails => prevEmails.map(email => email.id === updatedEmail.id ? updatedEmail : email))
             loadEmails();
         } catch (error) {
             console.log("Error updating email", error);
@@ -87,11 +95,18 @@ export function EmailIndex() {
     }
 
     // Removing email
-    async function onRemoveEmail(emailId) {
+    async function onRemoveEmail(email) {
         try {
-            console.log('emailId', emailId);
-            await emailService.remove(emailId)
-            setEmails((prevEmails) => prevEmails.filter(email => email.id !== emailId))
+            if (params.folderId !== "trash") {
+                email.removedAt = Date.now()
+                emailService.save(email)
+            } else {
+                console.log('emailId', email.id);
+                await emailService.remove(email.id)
+            }
+            setEmails((prevEmails) => prevEmails.filter(e => e.id !== email.id))
+            const emailsCount = await emailService.getEmailsCounts()
+            setEmailsCount(emailsCount)
         } catch (error) {
             console.error('Had issues loading the emails: ', error);
         }
@@ -103,14 +118,13 @@ export function EmailIndex() {
     if (!emails) return <div>Loading..</div>
     return (
         <div className="email-index-container">
-        <Logo />
+            <Logo />
             <SideMenu emails={emails} />
 
             <EmailFilter onSetFilter={onSetFilter} />
 
 
-        {!params.emailId && (
-            <>
+            {params.emailId ? <Outlet /> : (
                 <section className="mail-list--container">
                     <EmailList
                         onUpdateEmail={onUpdateEmail}
@@ -121,11 +135,9 @@ export function EmailIndex() {
                         onEnterEmail={onEnterEmail}
                     />
                 </section>
-            </>
-        )}
-        <Outlet />
+            )}
 
-    </div>
+        </div>
     )
 }
 

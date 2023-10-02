@@ -25,8 +25,9 @@ export function App() {
                         </Route>
 
                         {/* Main Email Page */}
-                        <Route path="emails" element={<EmailIndex />} />
-                        <Route path="/email/details/:emailId" element={<EmailDetails />} />
+                        <Route path="emails/:folderId" element={<EmailIndex />}>
+                            <Route path="/emails/:folderId/:emailId" element={<EmailDetails />} />
+                        </Route>
                     </Routes>
                 </main>
                 {/* FooterPage */}

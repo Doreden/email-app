@@ -18,7 +18,7 @@ export function AppHeader() {
                         <button type="button">
                             <img src={aboutBtn} />
                         </button></Link>
-                    <Link to="/emails">
+                    <Link to="/emails/inbox">
                         <button type="button">
                             <img src={emailsBtn} />
                         </button>
