@@ -7,6 +7,7 @@ import { AboutTeam } from './components/about/AboutTeam';
 import { AboutVision } from './components/about/AboutVision';
 import { EmailIndex } from './pages/EmailIndex';
 import { EmailDetails } from './components/email/EmailDetails';
+import { EmailCompose } from './components/email/EmailCompose';
 export function App() {
 
     return (
@@ -24,8 +25,9 @@ export function App() {
                             <Route path="/about/vision" element={<AboutVision />} />
                         </Route>
 
-                        {/* Main Email Page */}
-                        <Route path="emails/:folderId" element={<EmailIndex />}>
+                        {/* Main EmailIndex Page */}
+                        <Route path="/emails/:folderId" element={<EmailIndex />}>
+                            <Route path="/emails/:folderId/compose" element={<EmailCompose />} />
                             <Route path="/emails/:folderId/:emailId" element={<EmailDetails />} />
                         </Route>
                     </Routes>

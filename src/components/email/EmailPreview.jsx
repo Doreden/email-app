@@ -4,13 +4,12 @@ import star from "../../../src/assets/svg/star-sculpt.png";
 import bin from "../../../src/assets/svg/bin.png"
 
 
-export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEmail, onUpdateEmail }) {
+export function EmailPreview({ email, onRemove, onMailRead, onStarred, onEnterEmail, onUpdateEmail }) {
 
     const params = useParams()
 
     //For Starred a Email:
     function onToggleStar() {
-        console.log(email)
         const newEmail = {
             ...email,
             isStarred: !email.isStarred
@@ -51,7 +50,7 @@ export function EmailPreview({ email, onRemove, onMailRead, onStarred, OnEnterEm
                 <Link
                     className={"mail-preview-link"}
                     to={`/emails/${params.folderId}/${email.id}`}
-                    onClick={() => OnEnterEmail(email.id)}
+                    onClick={() => onEnterEmail(email.id)}
                 >
                     <div className={"mail-preview-from"}>
                         {email.from}

@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
 import { emailService } from "../services/email.service";
 import { EmailList } from "../components/email/EmailList";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { EmailFilter } from "../components/email/EmailFilter";
 import { SideMenu } from "../components/aside/SideMenu";
+import { EmailCompose } from "../components/email/EmailCompose";
 
 
 export function EmailIndex() {
 
     // define the emails
     const [emails, setEmails] = useState(null);
-    const [emailsCount, setEmailsCount] = useState(null);
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
     const params = useParams();
+    const location = useLocation()
 
     // rendering the emails
-    console.log(params)
     useEffect(() => {
         loadEmails();
     }, [filterBy, params])
@@ -35,7 +35,7 @@ export function EmailIndex() {
             const emails = await emailService.query(filterBy, params.folderId);
             const emailsCount = await emailService.getEmailsCounts()
             setEmails(emails)
-            setEmailsCount(emailsCount)
+            // setEmailsCount(emailsCount)
         } catch (error) {
             console.error('Had issues loading the emails: ', error);
         }
@@ -113,19 +113,16 @@ export function EmailIndex() {
     }
 
     //print the new fetched emails to console
-    console.log(emails)
-
     if (!emails) return <div>Loading..</div>
     return (
         <div className="email-index-container">
             <Logo />
             <SideMenu emails={emails} />
-
             <EmailFilter onSetFilter={onSetFilter} />
-
+            
 
             {params.emailId ? <Outlet /> : (
-                <section className="mail-list--container">
+                <section className="mail-list-container">
                     <EmailList
                         onUpdateEmail={onUpdateEmail}
                         emails={emails}
@@ -137,7 +134,12 @@ export function EmailIndex() {
                 </section>
             )}
 
+            {location.pathname.split("/").slice(-1) == "compose" ? <div className="float"><EmailCompose /></div> : <></>}
+    
+            
         </div>
+
+        
     )
 }
 

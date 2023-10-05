@@ -62,6 +62,7 @@ function getById(id) {
     return storageService.get(STORAGE_KEY, id)
 }
 
+
 //Remove Emails From Storage
 function remove(id) {
     return storageService.remove(STORAGE_KEY, id)
@@ -84,23 +85,52 @@ function getDefaultFilter() {
     };
 }
 
- function getEmailsCounts() {
-    return {
-        inbox: 5,
-        starred: 20,
-        sent: 5,
-        drafts: 6,
-        trash: 8
-    }
+async function getEmailsCounts() {
+    let emails = await storageService.query(STORAGE_KEY);
+    const countMap = emails.reduce((acc, email) => {
+        if (!email.isRead && email.to == loggedInUser.email && email.removedAt === null && email.sentAt !== null) {
+            acc.Inbox++
+        }
+        if (email.isStarred) {
+            acc.Starred++
+        }
+
+        if (email.from === loggedInUser.email && email.removedAt === null && email.sentAt != null) {
+            acc.Sent++
+        }
+
+
+        if (email.sentAt === null && email.removedAt === null) {
+            acc.Drafts++
+        }
+
+        if (email.removedAt !== null) {
+            acc.Trash++
+        }
+
+        return acc
+    }, {
+        Inbox: 0,
+        Starred: 0,
+        Sent: 0,
+        Drafts: 0,
+        Trash: 0,
+    })
+    return countMap
 }
 
-function createEmail(subject = '', body = '', isRead = false, isStarred = false, sentAt = '', removedAt = null, from = '', to = '') {
+function createEmail(subject = '', body = '', isRead = false, isStarred = false, sentAt = Date.now(), removedAt = null, from = '', to = '') {
     return {
         subject,
         body,
         sentAt,
-        from,
+        from:"dor.eden@gmail.com",
         to,
+        isRead,
+        isStarred,
+        sentAt,
+        removedAt
+
     }
 }
 

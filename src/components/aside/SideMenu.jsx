@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import pencilBtn from "../../../src/assets/svg/pencil.svg"
+import { emailService } from "../../services/email.service";
 
 
 const buttons = [
@@ -13,10 +14,10 @@ const buttons = [
 
 export function SideMenu({ emails }) {
     const [active, setActive] = useState("inbox");
+    const [emailsCount, setEmailsCount] = useState(emailService.getEmailsCounts());
     const navigate = useNavigate()
-    const unreadEmailsCount = emails.filter(
-        (email) => email.isRead !== true
-    ).length;
+    const params = useParams()
+
 
     function setActiveButton(id) {
         setActive(id);
@@ -26,12 +27,25 @@ export function SideMenu({ emails }) {
     }
 
     useEffect(() => {
-        setActive(1);
-    }, [])
+        setActive(params.folderId);
+        loadEmailsCount()
+    }, [emails])
+
+    // function that loading the new emails in a async way //
+    async function loadEmailsCount() {
+        try {
+            // const emails = await emailService.query(filterBy, params.folderId);
+            const emailsCount = await emailService.getEmailsCounts()
+            // setEmails(emails)
+            setEmailsCount(emailsCount)
+        } catch (error) {
+            console.error('Had issues loading the emails: ', error);
+        }
+    }
 
     return (
         <div className="aside-menu-container">
-            <Link to={"/email/compose"} className="compose-btn">
+            <Link to={`/emails/${params.folderId}/compose`} className="compose-btn">
                 <span className="compose-img--span">
                     <img className="compose-img" src={pencilBtn} />
                 </span>
@@ -44,13 +58,13 @@ export function SideMenu({ emails }) {
                     className={`side-panel-btn ${active === button.id ? "active" : ""}`}
                     onClick={() => setActiveButton(button.id)}
                 >
-                    <img src={button.img} alt={button.name} />
-                    <p className={active === button.id ? "active" : ""}>
+                    <img className="side-panel-img" src={button.img} alt={button.name} />
+                    <p className="side-panel-text">
                         {button.name}
-                        <span className="emails-count">
-                            {button.name === "Inbox" && unreadEmailsCount > 0 ? unreadEmailsCount : ""}
-                        </span>
                     </p>
+                    <span className="emails-count" >
+                        {emailsCount[button.name]}
+                    </span>
                 </button>
             ))
             }
