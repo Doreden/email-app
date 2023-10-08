@@ -118,6 +118,7 @@ export function EmailIndex() {
         <div className="email-index-container">
             <Logo />
             <SideMenu emails={emails} />
+
             <EmailFilter onSetFilter={onSetFilter} />
             
 

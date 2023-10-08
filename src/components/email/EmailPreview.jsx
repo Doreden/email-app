@@ -46,17 +46,15 @@ export function EmailPreview({ email, onRemove, onMailRead, onStarred, onEnterEm
                 </div>
 
                 {/* From Section : */}
+                <div className={"mail-preview-from"}>
+                    {email.from}
+                </div>
                 {/* Link Section : */}
                 <Link
                     className={"mail-preview-link"}
                     to={`/emails/${params.folderId}/${email.id}`}
                     onClick={() => onEnterEmail(email.id)}
                 >
-                    <div className={"mail-preview-from"}>
-                        {email.from}
-                    </div>
-
-
                 </Link>
 
                 {/* Subject Section : */}

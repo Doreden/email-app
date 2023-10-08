@@ -3,7 +3,7 @@ import { utilService } from './util.service.js'
 
 const loggedInUser = {
     email: "dor.eden@gmail.com",
-    fullname: "Dor",
+    fullName: "Dor",
 };
 
 export const emailService = {
@@ -119,12 +119,12 @@ async function getEmailsCounts() {
     return countMap
 }
 
-function createEmail(subject = '', body = '', isRead = false, isStarred = false, sentAt = Date.now(), removedAt = null, from = '', to = '') {
+function createEmail(subject = '', body = '', isRead = false, isStarred = false, sentAt = null, removedAt = null, from = '', to = '') {
     return {
         subject,
         body,
         sentAt,
-        from:"dor.eden@gmail.com",
+        from: "dor.eden@gmail.com",
         to,
         isRead,
         isStarred,

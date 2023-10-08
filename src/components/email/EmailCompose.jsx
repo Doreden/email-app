@@ -1,12 +1,22 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { emailService } from "../../services/email.service";
 import { useState } from "react";
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
 
 export function EmailCompose() {
     const navigate = useNavigate();
     const [email, setEmail] = useState(emailService.createEmail())
     const params = useParams()
     const [showToLabel, setShowToLabel] = useState(false)
+
+    function closeMail() {
+        if (email.body) {
+            emailService.save(email)
+        }
+
+        navigate(`/emails/${params.folderId}`);
+    }
+
 
 
     function handleChange({ target }) {
@@ -28,10 +38,13 @@ export function EmailCompose() {
         ev.preventDefault()
         try {
             console.log(email)
+            email.sentAt = Date.now()
             const savedEmail = await emailService.save(email)
+            showSuccessMsg('Mail sent successfully')
             navigate("/emails/inbox");
 
         } catch (err) {
+            showErrorMsg('Something went wrong..')
             console.log("Error", err);
         }
     }
@@ -42,9 +55,12 @@ export function EmailCompose() {
             <div className="new-message">
                 <p className="new-message-title">New Message</p>
 
-                <Link to={`/emails/${params.folderId}`}>
-                    <h3 className="new-message-close-btn">X</h3>
-                </Link>
+                {/* <Link to={`/emails/${params.folderId}`}>
+                    <h3 className="new-message-close-btn" onClick={closeMail()}>X</h3>
+                </Link> */}
+
+                <h3 className="new-message-close-btn" onClick={closeMail}>X</h3>
+
             </div>
 
 
@@ -63,9 +79,9 @@ export function EmailCompose() {
                 <input placeholder="Subject" value={subject || ""} onChange={handleChange} type="text"
                     name="subject" />
             </div>
-            
+
             <div className="body-input-container">
-                <textarea placeholder="message"  value={body || ""} onChange={handleChange}
+                <textarea placeholder="message" value={body || ""} onChange={handleChange}
                     name="body" />
             </div>
 

@@ -8,6 +8,7 @@ import { AboutVision } from './components/about/AboutVision';
 import { EmailIndex } from './pages/EmailIndex';
 import { EmailDetails } from './components/email/EmailDetails';
 import { EmailCompose } from './components/email/EmailCompose';
+import { UserMsg} from "./components/app/UserMsg";
 export function App() {
 
     return (
@@ -35,6 +36,7 @@ export function App() {
                 {/* FooterPage */}
                 <AppFooter />
             </section>
+            <UserMsg/>
         </Router>
 
     )

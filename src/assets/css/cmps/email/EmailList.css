@@ -24,15 +24,17 @@
 
  .main-email-container:hover {
    /* height: 38px; */
-   border: 0.5px solid rgb(188, 187, 187);
-   border-bottom: 1px solid rgb(108, 108, 108);
+   border: 0.5px solid  transparent;
+   border-bottom: 1px solid  transparent;
  }
 
 
 
  .mail-preview-link {
-   grid-area: 1/3/ span 1/ span 3;
+   grid-area: 1/3/ span 1 / span 3;
    z-index: 3;
+   width: 100%;
+   height: 100%;
  }
 
 

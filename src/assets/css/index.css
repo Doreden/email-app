@@ -20,3 +20,4 @@
 @import "./cmps/email/EmailIndex.css";
 @import "./cmps/email/EmailList.css";
 @import "./cmps/email/SideMenu.css";
+@import "../css/cmps/app/userMsg.css"
